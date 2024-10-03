@@ -21,22 +21,25 @@ variable "db_name" {
   default     = "rappidu"
 }
 
-resource "aws_security_group" "rds_public_access" {
-  name        = "rds_public_access_sg"
-  description = "Security Group para acesso público ao RDS MySQL"
-  vpc_id      = aws_vpc.main.id  # Certifique-se de que a VPC exista ou defina aqui uma.
+resource "aws_security_group" "sg" {
+  name        = "SG-BD"
+  description = "Security Group do banco de dados usado no trabalho FIAP - projeto Rappidu"
+  vpc_id      = data.aws_vpc.vpc.id
 
+  # Inbound
   ingress {
-    from_port   = 3306              # Porta do MySQL
+    from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]     # Permite acesso de qualquer IP público
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Outbound
   egress {
+    description = "All"
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"              # Permite todo o tráfego de saída
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
