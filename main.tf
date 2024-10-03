@@ -25,8 +25,7 @@ resource "aws_db_instance" "rappidu_db" {
   allocated_storage    = 20      
   engine               = "mysql"
   instance_class       = "db.t3.micro"
-  identifier           = "rappidu"  
-  name                 = var.db_name      
+  identifier           = var.db_name    
   username             = var.db_username   
   password             = var.db_password   
   parameter_group_name = "default.mysql8.0"
